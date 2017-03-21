@@ -12,7 +12,7 @@ ENV OSPL_URL file:///usr/etc/opensplice/config/ospl.xml
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install base stack packages.
-RUN apt-get update && apt-get install -q -y --no-install-recommends --no-install-suggests gnupg git wget apt-utils locales
+RUN apt-get update && apt-get install -q -y --no-install-recommends --no-install-suggests gnupg git wget apt-utils locales && rm -rf /var/lib/apt/lists/*
 RUN touch /usr/share/locale/locale.alias && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG en_US.utf8
 
@@ -40,14 +40,14 @@ RUN mkdir -p /usr/share/man/man1
 # Install ROS-java dependancy.
 RUN apt-get update && apt-get install -q -y --no-install-recommends --no-install-suggests \
     gradle openjdk-8-jdk openjdk-8-jdk-headless openjdk-8-jre openjdk-8-jre-headless libhawtjni-runtime-java \
-    build-essential cppcheck cmake libopencv-dev libpoco-dev libpocofoundation9v5 libpocofoundation9v5-dbg python-empy python3-dev python3-empy python3-nose python3-pip python3-setuptools python3-vcstool \
+    build-essential cppcheck cmake libopencv-dev libpoco-dev libpocofoundation46 python-empy python3-dev python3-empy python3-nose python3-pip python3-setuptools python3-vcstool \
     clang-format pydocstyle pyflakes python3-coverage python3-mock python3-pep8 uncrustify \
     libboost-chrono-dev libboost-date-time-dev libboost-program-options-dev libboost-regex-dev libboost-system-dev libboost-thread-dev \
     pyflakes
 #    libopensplice64
 
 # Tempory Gradle.
-RUN /usr/bin/wget https://launchpad.net/~cwchien/+archive/ubuntu/gradle/+files/gradle-2.14.1_1.0-0ubuntu1_all.deb && dpkg -i gradle-2.14.1_1.0-0ubuntu1_all.deb
+# RUN /usr/bin/wget https://launchpad.net/~cwchien/+archive/ubuntu/gradle/+files/gradle-2.14.1_1.0-0ubuntu1_all.deb && dpkg -i gradle-2.14.1_1.0-0ubuntu1_all.deb
 
 # Clean tempories files.
 RUN rm -rf /var/lib/apt/lists/*
