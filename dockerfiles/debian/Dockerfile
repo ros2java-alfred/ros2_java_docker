@@ -39,11 +39,12 @@ RUN mkdir -p /usr/share/man/man1
 
 # Install ROS-java dependancy.
 RUN apt-get update && apt-get install -q -y --no-install-recommends --no-install-suggests \
-    gradle openjdk-8-jdk openjdk-8-jdk-headless openjdk-8-jre openjdk-8-jre-headless libhawtjni-runtime-java \
-    build-essential cppcheck cmake libopencv-dev libpoco-dev libpocofoundation46 python-empy python3-dev python3-empy python3-nose python3-pip python3-setuptools python3-vcstool \
-    clang-format pydocstyle pyflakes python3-coverage python3-mock python3-pep8 uncrustify \
-    libboost-chrono-dev libboost-date-time-dev libboost-program-options-dev libboost-regex-dev libboost-system-dev libboost-thread-dev \
-    pyflakes
+     gradle openjdk-8-jdk openjdk-8-jdk-headless openjdk-8-jre openjdk-8-jre-headless libhawtjni-runtime-java \
+     git wget build-essential cppcheck cmake libopencv-dev libpoco-dev python-empy python3-empy python3-setuptools python3-nose python3-pip python3-vcstool libtinyxml-dev libeigen3-dev \
+     pyflakes python3-coverage python3-mock python3-nose python3-pep8 uncrustify \
+     libasio-dev libboost-chrono-dev libboost-date-time-dev libboost-program-options-dev libboost-regex-dev libboost-system-dev libboost-thread-dev libboost-thread-dev libtinyxml2-dev \
+     libbz2-dev libreadline-dev libsqlite3-dev libusb-1.0-0-dev libudev-dev \
+     pydocstyle clang-format python3-dev libpocofoundation46
 #    libopensplice64
 
 # Tempory Gradle.
