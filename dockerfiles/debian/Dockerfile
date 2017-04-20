@@ -1,6 +1,9 @@
 # Download base image Debian testing (Slim).
 FROM debian:testing-slim
 
+MAINTAINER Mickael Gaillard <mick.gaillard@gmail.com>
+LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>"
+
 # Set Environements Variables.
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV JAVA_AWT_INCLUDE_PATH /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/
@@ -10,6 +13,7 @@ ENV JAVA_AWT_LIBRARY /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/libjawt.so
 ENV JAVA_JVM_LIBRARY /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so
 ENV OSPL_URL file:///usr/etc/opensplice/config/ospl.xml
 ENV DEBIAN_FRONTEND noninteractive
+ENV INITRD no
 
 # Install base stack packages.
 RUN apt-get update && apt-get install -q -y --no-install-recommends --no-install-suggests gnupg git wget apt-utils locales && rm -rf /var/lib/apt/lists/*
@@ -44,14 +48,11 @@ RUN apt-get update && apt-get install -q -y --no-install-recommends --no-install
      pyflakes python3-coverage python3-mock python3-nose python3-pep8 uncrustify \
      libasio-dev libboost-chrono-dev libboost-date-time-dev libboost-program-options-dev libboost-regex-dev libboost-system-dev libboost-thread-dev libboost-thread-dev libtinyxml2-dev \
      libbz2-dev libreadline-dev libsqlite3-dev libusb-1.0-0-dev libudev-dev \
-     pydocstyle clang-format python3-dev libpocofoundation46
+     pydocstyle clang-format python3-dev libpocofoundation46 && rm -rf /var/lib/apt/lists/*
 #    libopensplice64
 
 # Tempory Gradle.
 # RUN /usr/bin/wget https://launchpad.net/~cwchien/+archive/ubuntu/gradle/+files/gradle-2.14.1_1.0-0ubuntu1_all.deb && dpkg -i gradle-2.14.1_1.0-0ubuntu1_all.deb
-
-# Clean tempories files.
-RUN rm -rf /var/lib/apt/lists/*
 
 # Create default Workspace.
 RUN mkdir -p /home/travis/build/ament_ws/src
@@ -59,4 +60,4 @@ RUN mkdir -p /home/travis/build/ros2_java_ws/src
 RUN cd /home/travis/build
 
 # Run commans
-CMD echo "It's work... !"
+CMD echo "Welcome to Debian Testing GNU/linux for ROS2 Java"
