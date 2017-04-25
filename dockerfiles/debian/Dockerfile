@@ -1,63 +1,114 @@
 # Download base image Debian testing (Slim).
 FROM debian:testing-slim
 
-MAINTAINER Mickael Gaillard <mick.gaillard@gmail.com>
-LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>"
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION="1.0.3"
+
+LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
+      version="$VERSION" \
+      description="ROS2 for java" \
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="ROS2java" \
+      org.label-schema.description="" \
+      org.label-schema.url="https://github.com/ros2java-alfred/ros2_java_docker" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/ros2java-alfred/ros2_java_docker" \
+      org.label-schema.vendor="ROS2java-Alfred" \
+      org.label-schema.version=$VERSION \
+      org.label-schema.schema-version="1.0"
 
 # Set Environements Variables.
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
-ENV JAVA_AWT_INCLUDE_PATH /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/
-ENV JAVA_INCLUDE_PATH /usr/lib/jvm/java-8-openjdk-amd64/include
-ENV JAVA_INCLUDE_PATH2 /usr/lib/jvm/java-8-openjdk-amd64/include/linux
-ENV JAVA_AWT_LIBRARY /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/libjawt.so
-ENV JAVA_JVM_LIBRARY /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so
-ENV OSPL_URL file:///usr/etc/opensplice/config/ospl.xml
-ENV DEBIAN_FRONTEND noninteractive
-ENV INITRD no
+ENV INITRD                  no \
+    LANG                    en_US.utf8 \
+    DEBIAN_FRONTEND         noninteractive \
+    JAVA_HOME               /usr/lib/jvm/java-8-openjdk-amd64 \
+    JAVA_AWT_INCLUDE_PATH   /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/ \
+    JAVA_INCLUDE_PATH       /usr/lib/jvm/java-8-openjdk-amd64/include \
+    JAVA_INCLUDE_PATH2      /usr/lib/jvm/java-8-openjdk-amd64/include/linux \
+    JAVA_AWT_LIBRARY        /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/libjawt.so \
+    JAVA_JVM_LIBRARY        /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so \
+    OSPL_URL                file:///usr/etc/opensplice/config/ospl.xml
 
-# Install base stack packages.
-RUN apt-get update && apt-get install -q -y --no-install-recommends --no-install-suggests gnupg git wget apt-utils locales && rm -rf /var/lib/apt/lists/*
-RUN touch /usr/share/locale/locale.alias && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-ENV LANG en_US.utf8
+ARG APT_FLAGS="-q -y --no-install-recommends --no-install-suggests"
 
-# ROS Repo Stack ##############################################################
+# Base Build Stack ##############################################################
 
-# Setup Key.
-#RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 421C365BD9FF1F717815A3895523BAEEB01FA116
-RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add -
+RUN apt-get update && \
+    apt-get install ${APT_FLAGS} \
+        gnupg \
+        git \
+        wget \
+        apt-utils \
+        locales && \
+    touch /usr/share/locale/locale.alias && \
+    mkdir -p /usr/share/man/man1 && \
+    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
+    rm -rf /var/lib/apt/lists/*
 
-# Setup sources list.
-RUN echo "deb http://packages.ros.org/ros/ubuntu jessie main" > /etc/apt/sources.list.d/ros-latest.list
+# ROS2 Build Stack ##############################################################
 
-# OSRF Repo Stack ##############################################################
+# apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 421C365BD9FF1F717815A3895523BAEEB01FA116
+# apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys D2486D2DD83DB69272AFE98867170598AF249743
+# echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable jessie main" > /etc/apt/sources.list.d/gazebo-latest.list
 
-# Setup keys
-#RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys D2486D2DD83DB69272AFE98867170598AF249743
-RUN /usr/bin/wget -qO - http://packages.osrfoundation.org/gazebo.key | apt-key add -
+RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
+    /usr/bin/wget -qO - http://packages.osrfoundation.org/gazebo.key | apt-key add - && \
+    echo "deb http://packages.ros.org/ros/ubuntu jessie main" > /etc/apt/sources.list.d/ros-latest.list && \
+    apt-get update && \
+    apt-get install ${APT_FLAGS} \
+        gradle \
+        openjdk-8-jdk \
+        openjdk-8-jdk-headless \
+        openjdk-8-jre \
+        openjdk-8-jre-headless \
+        libhawtjni-runtime-java \
+        git \
+        wget \
+        build-essential \
+        cppcheck \
+        cmake \
+        libopencv-dev \
+        libpoco-dev \
+        python-empy \
+        python3-empy \
+        python3-setuptools \
+        python3-nose \
+        python3-pip \
+        python3-vcstool \
+        libtinyxml-dev \
+        libeigen3-dev \
+        pyflakes \
+        python3-coverage \
+        python3-mock \
+        python3-nose \
+        python3-pep8 \
+        uncrustify \
+        libasio-dev \
+        libboost-chrono-dev \
+        libboost-date-time-dev \
+        libboost-program-options-dev \
+        libboost-regex-dev \
+        libboost-system-dev \
+        libboost-thread-dev \
+        libboost-thread-dev \
+        libtinyxml2-dev \
+        libbz2-dev \
+        libreadline-dev \
+        libsqlite3-dev \
+        libusb-1.0-0-dev \
+        libudev-dev \
+        pydocstyle \
+        clang-format \
+        python3-dev \
+        libpocofoundation46 && \
+    rm -rf /var/lib/apt/lists/*
 
-# Setup sources list.
-#RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable jessie main" > /etc/apt/sources.list.d/gazebo-latest.list
-
-# Create default path for man.
-RUN mkdir -p /usr/share/man/man1
-
-# Install ROS-java dependancy.
-RUN apt-get update && apt-get install -q -y --no-install-recommends --no-install-suggests \
-     gradle openjdk-8-jdk openjdk-8-jdk-headless openjdk-8-jre openjdk-8-jre-headless libhawtjni-runtime-java \
-     git wget build-essential cppcheck cmake libopencv-dev libpoco-dev python-empy python3-empy python3-setuptools python3-nose python3-pip python3-vcstool libtinyxml-dev libeigen3-dev \
-     pyflakes python3-coverage python3-mock python3-nose python3-pep8 uncrustify \
-     libasio-dev libboost-chrono-dev libboost-date-time-dev libboost-program-options-dev libboost-regex-dev libboost-system-dev libboost-thread-dev libboost-thread-dev libtinyxml2-dev \
-     libbz2-dev libreadline-dev libsqlite3-dev libusb-1.0-0-dev libudev-dev \
-     pydocstyle clang-format python3-dev libpocofoundation46 && rm -rf /var/lib/apt/lists/*
 #    libopensplice64
 
-# Tempory Gradle.
-# RUN /usr/bin/wget https://launchpad.net/~cwchien/+archive/ubuntu/gradle/+files/gradle-2.14.1_1.0-0ubuntu1_all.deb && dpkg -i gradle-2.14.1_1.0-0ubuntu1_all.deb
-
 # Create default Workspace.
-RUN mkdir -p /home/travis/build/ament_ws/src
-RUN mkdir -p /home/travis/build/ros2_java_ws/src
-RUN cd /home/travis/build
+RUN mkdir -p /home/travis/build/ament_ws/src && \
+    mkdir -p /home/travis/build/ros2_java_ws/src
 
 # Run commans
 CMD echo "Welcome to Debian Testing GNU/linux for ROS2 Java"
