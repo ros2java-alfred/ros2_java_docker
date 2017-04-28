@@ -20,9 +20,6 @@ LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
 
 # Set Environements Variables.
 ENV INITRD                  no \
-    LANG                    en_US.UTF-8 \
-    LANGUAGE                en_US:en \
-    LC_ALL                  en_US.UTF-8 \
     DEBIAN_FRONTEND         noninteractive \
     JAVA_HOME               /usr/lib/jvm/java-8-openjdk-amd64 \
     JAVA_AWT_INCLUDE_PATH   /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/ \
@@ -43,11 +40,16 @@ RUN apt-get update && \
         wget \
         apt-utils \
         locales && \
+    locale-gen en_US.UTF-8 && \
     touch /usr/share/locale/locale.alias && \
     mkdir -p /usr/share/man/man1 && \
-    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
-    locale-gen en_US.UTF-8 && \
+    sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    echo 'LANG="en_US.UTF-8"' > /etc/default/locale && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=en_US.UTF-8 && \
     rm -rf /var/lib/apt/lists/*
+
+ENV LANG en_US.UTF-8
 
 # ROS2 Build Stack ##############################################################
 
