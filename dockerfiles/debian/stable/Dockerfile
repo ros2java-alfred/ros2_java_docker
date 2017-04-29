@@ -4,6 +4,7 @@ FROM debian:stable-slim
 ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION="1.0.3"
+ARG APT_FLAGS="-q -y --no-install-recommends --no-install-suggests"
 
 LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
       version="$VERSION-debian-stable" \
@@ -19,17 +20,15 @@ LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
       org.label-schema.schema-version="1.0"
 
 # Set Environements Variables.
-ENV INITRD                  no \
-    DEBIAN_FRONTEND         noninteractive \
-    JAVA_HOME               /usr/lib/jvm/java-8-openjdk-amd64 \
-    JAVA_AWT_INCLUDE_PATH   /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/ \
-    JAVA_INCLUDE_PATH       /usr/lib/jvm/java-8-openjdk-amd64/include \
-    JAVA_INCLUDE_PATH2      /usr/lib/jvm/java-8-openjdk-amd64/include/linux \
-    JAVA_AWT_LIBRARY        /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/libjawt.so \
-    JAVA_JVM_LIBRARY        /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so \
-    OSPL_URL                file:///usr/etc/opensplice/config/ospl.xml
-
-ARG APT_FLAGS="-q -y --no-install-recommends --no-install-suggests"
+ENV INITRD="no" \
+    DEBIAN_FRONTEND="noninteractive" \
+    JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64" \
+    JAVA_AWT_INCLUDE_PATH="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64" \
+    JAVA_INCLUDE_PATH="/usr/lib/jvm/java-8-openjdk-amd64/include" \
+    JAVA_INCLUDE_PATH2="/usr/lib/jvm/java-8-openjdk-amd64/include/linux" \
+    JAVA_AWT_LIBRARY="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/libjawt.so" \
+    JAVA_JVM_LIBRARY="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so" \
+    OSPL_URL="file:///usr/etc/opensplice/config/ospl.xml"
 
 # Base Build Stack ##############################################################
 
@@ -49,7 +48,7 @@ RUN apt-get update && \
     update-locale LANG=en_US.UTF-8 && \
     rm -rf /var/lib/apt/lists/*
 
-ENV LANG en_US.UTF-8
+ENV LANG="en_US.UTF-8"
 
 # ROS2 Build Stack ##############################################################
 
