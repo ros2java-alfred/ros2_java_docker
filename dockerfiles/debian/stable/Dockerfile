@@ -1,12 +1,12 @@
-# Download base image Debian testing (Slim).
-FROM debian:testing-slim
+# Download base image Debian stable (Slim).
+FROM debian:stable-slim
 
 ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION="1.0.3"
 
 LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
-      version="$VERSION-debian-testing" \
+      version="$VERSION-debian-stable" \
       description="ROS2 for java" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="ROS2java" \
@@ -15,7 +15,7 @@ LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url="https://github.com/ros2java-alfred/ros2_java_docker" \
       org.label-schema.vendor="ROS2java-Alfred" \
-      org.label-schema.version="$VERSION-debian-testing" \
+      org.label-schema.version="$VERSION-debian-stable" \
       org.label-schema.schema-version="1.0"
 
 # Set Environements Variables.
@@ -55,22 +55,23 @@ ENV LANG en_US.UTF-8
 
 RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
     /usr/bin/wget -qO - http://packages.osrfoundation.org/gazebo.key | apt-key add - && \
-    echo "deb http://packages.ros.org/ros/ubuntu stretch main" > /etc/apt/sources.list.d/ros-latest.list && \
-    echo "deb http://packages.osrfoundation.org/gazebo/debian-stable stretch main" > /etc/apt/sources.list.d/gazebo-latest.list && \
+    echo "deb http://packages.ros.org/ros/ubuntu jessie main" > /etc/apt/sources.list.d/ros-latest.list && \
+    echo "deb http://packages.osrfoundation.org/gazebo/debian-stable jessie main" > /etc/apt/sources.list.d/gazebo-latest.list && \
+    echo "deb http://httpredir.debian.org/debian jessie-backports main contrib non-free" > /etc/apt/sources.list.d/debian-bp.list && \
     apt-get update && \
     apt-get install ${APT_FLAGS} \
         gradle \
-        openjdk-8-jdk \
-        openjdk-8-jdk-headless \
-        openjdk-8-jre \
-        openjdk-8-jre-headless \
+        openjdk-7-jdk \
+        openjdk-7-jre \
+        openjdk-7-jre-headless \
         libhawtjni-runtime-java \
         build-essential \
         cppcheck \
         cmake \
         libopencv-dev \
         libpoco-dev \
-        libpocofoundation46 \
+        libpocofoundation9 \
+        libpocofoundation9-dbg \
         python-empy \
         python3-dev \
         python3-empy \
@@ -80,8 +81,7 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         python3-vcstool \
         libtinyxml-dev \
         libeigen3-dev \
-        clang-format \
-        pydocstyle \
+        clang-format-3.5 \
         pyflakes \
         python3-coverage \
         python3-mock \
@@ -103,6 +103,9 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         libusb-1.0-0-dev \
         libudev-dev \
         python3-dev && \
+    wget http://ftp.us.debian.org/debian/pool/main/p/pydocstyle/pydocstyle_1.0.0-3_all.deb && \
+    dpkg -i ./pydocstyle_1.0.0-3_all.deb && \
+    rm -rf ./pydocstyle_1.0.0-3_all.deb && \
     rm -rf /var/lib/apt/lists/*
 
 #    libopensplice64
@@ -112,4 +115,4 @@ RUN mkdir -p /home/travis/build/ament_ws/src && \
     mkdir -p /home/travis/build/ros2_java_ws/src
 
 # Run commans
-CMD echo "Welcome to Debian Testing GNU/linux for ROS2 Java"
+CMD echo "Welcome to Debian Stable GNU/linux for ROS2 Java"

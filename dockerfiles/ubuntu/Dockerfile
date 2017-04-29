@@ -1,12 +1,12 @@
-# Download base image Debian testing (Slim).
-FROM debian:testing-slim
+# Download base image Ubuntu latest LTS.
+FROM ubuntu:latest
 
 ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION="1.0.3"
 
 LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
-      version="$VERSION-debian-testing" \
+      version="$VERSION-ubuntu-LTS" \
       description="ROS2 for java" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="ROS2java" \
@@ -15,7 +15,7 @@ LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url="https://github.com/ros2java-alfred/ros2_java_docker" \
       org.label-schema.vendor="ROS2java-Alfred" \
-      org.label-schema.version="$VERSION-debian-testing" \
+      org.label-schema.version="$VERSION-ubuntu-LTS" \
       org.label-schema.schema-version="1.0"
 
 # Set Environements Variables.
@@ -55,8 +55,8 @@ ENV LANG en_US.UTF-8
 
 RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
     /usr/bin/wget -qO - http://packages.osrfoundation.org/gazebo.key | apt-key add - && \
-    echo "deb http://packages.ros.org/ros/ubuntu stretch main" > /etc/apt/sources.list.d/ros-latest.list && \
-    echo "deb http://packages.osrfoundation.org/gazebo/debian-stable stretch main" > /etc/apt/sources.list.d/gazebo-latest.list && \
+    echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list && \
+    echo "deb http://packages.osrfoundation.org/gazebo/ubuntu xenial main" > /etc/apt/sources.list.d/gazebo-latest.list && \
     apt-get update && \
     apt-get install ${APT_FLAGS} \
         gradle \
@@ -70,7 +70,8 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         cmake \
         libopencv-dev \
         libpoco-dev \
-        libpocofoundation46 \
+        libpocofoundation9v5 \
+        libpocofoundation9v5-dbg \
         python-empy \
         python3-dev \
         python3-empy \
@@ -85,7 +86,6 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         pyflakes \
         python3-coverage \
         python3-mock \
-        python3-nose \
         python3-pep8 \
         uncrustify \
         libasio-dev \
@@ -95,14 +95,8 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         libboost-regex-dev \
         libboost-system-dev \
         libboost-thread-dev \
-        libboost-thread-dev \
-        libtinyxml2-dev \
-        libbz2-dev \
-        libreadline-dev \
-        libsqlite3-dev \
-        libusb-1.0-0-dev \
-        libudev-dev \
-        python3-dev && \
+        libtinyxml2-dev && \
+    pip3 install flake8 flake8-import-order && \
     rm -rf /var/lib/apt/lists/*
 
 #    libopensplice64
@@ -112,4 +106,4 @@ RUN mkdir -p /home/travis/build/ament_ws/src && \
     mkdir -p /home/travis/build/ros2_java_ws/src
 
 # Run commans
-CMD echo "Welcome to Debian Testing GNU/linux for ROS2 Java"
+CMD echo "Welcome to Ubuntu latest LTS GNU/linux for ROS2 Java"
