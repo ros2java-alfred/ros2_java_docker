@@ -4,13 +4,14 @@ FROM debian:testing-slim
 ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION="1.0.3"
+ARG APT_FLAGS="-q -y --no-install-recommends --no-install-suggests"
 
 LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
       version="$VERSION-debian-testing" \
       description="ROS2 for java" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="ROS2java" \
-      org.label-schema.description="" \
+      org.label-schema.description="ROS2 for java" \
       org.label-schema.url="https://github.com/ros2java-alfred/ros2_java_docker" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url="https://github.com/ros2java-alfred/ros2_java_docker" \
@@ -28,8 +29,6 @@ ENV INITRD="no" \
     JAVA_AWT_LIBRARY="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/libjawt.so" \
     JAVA_JVM_LIBRARY="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so" \
     OSPL_URL="file:///usr/etc/opensplice/config/ospl.xml"
-
-ARG APT_FLAGS="-q -y --no-install-recommends --no-install-suggests"
 
 # Base Build Stack ##############################################################
 

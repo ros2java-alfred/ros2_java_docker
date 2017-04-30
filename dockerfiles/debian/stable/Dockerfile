@@ -11,7 +11,7 @@ LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
       description="ROS2 for java" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="ROS2java" \
-      org.label-schema.description="" \
+      org.label-schema.description="ROS2 for java" \
       org.label-schema.url="https://github.com/ros2java-alfred/ros2_java_docker" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url="https://github.com/ros2java-alfred/ros2_java_docker" \
@@ -22,12 +22,12 @@ LABEL maintainer="Mickael Gaillard <mick.gaillard@gmail.com>" \
 # Set Environements Variables.
 ENV INITRD="no" \
     DEBIAN_FRONTEND="noninteractive" \
-    JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64" \
-    JAVA_AWT_INCLUDE_PATH="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64" \
-    JAVA_INCLUDE_PATH="/usr/lib/jvm/java-8-openjdk-amd64/include" \
-    JAVA_INCLUDE_PATH2="/usr/lib/jvm/java-8-openjdk-amd64/include/linux" \
-    JAVA_AWT_LIBRARY="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/libjawt.so" \
-    JAVA_JVM_LIBRARY="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so" \
+    JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64" \
+    JAVA_AWT_INCLUDE_PATH="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64" \
+    JAVA_INCLUDE_PATH="/usr/lib/jvm/java-7-openjdk-amd64/include" \
+    JAVA_INCLUDE_PATH2="/usr/lib/jvm/java-7-openjdk-amd64/include/linux" \
+    JAVA_AWT_LIBRARY="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/libjawt.so" \
+    JAVA_JVM_LIBRARY="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server/libjvm.so" \
     OSPL_URL="file:///usr/etc/opensplice/config/ospl.xml"
 
 # Base Build Stack ##############################################################
