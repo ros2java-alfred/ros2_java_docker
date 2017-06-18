@@ -93,7 +93,9 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         libboost-regex-dev \
         libboost-system-dev \
         libboost-thread-dev \
-        libtinyxml2-dev && \
+        libtinyxml2-dev \
+        libssl-dev \
+        openssl && \
     rm -rf /var/lib/apt/lists/*
 
 #    libopensplice64

@@ -101,7 +101,9 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         libsqlite3-dev \
         libusb-1.0-0-dev \
         libudev-dev \
-        python3-dev && \
+        python3-dev \
+        libssl-dev \
+        openssl && \
     rm -rf /var/lib/apt/lists/*
 
 #    libopensplice64

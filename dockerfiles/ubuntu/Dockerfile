@@ -94,7 +94,9 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         libboost-regex-dev \
         libboost-system-dev \
         libboost-thread-dev \
-        libtinyxml2-dev && \
+        libtinyxml2-dev \
+        libssl-dev \
+        openssl && \
     pip3 install flake8 flake8-import-order && \
     rm -rf /var/lib/apt/lists/*
 

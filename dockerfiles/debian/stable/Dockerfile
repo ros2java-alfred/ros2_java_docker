@@ -101,7 +101,9 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         libsqlite3-dev \
         libusb-1.0-0-dev \
         libudev-dev \
-        python3-dev && \
+        python3-dev \
+        libssl-dev \
+        openssl && \
     wget http://ftp.us.debian.org/debian/pool/main/p/pydocstyle/pydocstyle_1.0.0-3_all.deb && \
     dpkg -i ./pydocstyle_1.0.0-3_all.deb && \
     rm -rf ./pydocstyle_1.0.0-3_all.deb && \
