@@ -69,7 +69,6 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         cmake \
         libopencv-dev \
         libpoco-dev \
-        libpocofoundation46 \
         python-empy \
         python3-dev \
         python3-empy \
