@@ -110,7 +110,10 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
 
 # Create default Workspace.
 RUN mkdir -p /home/travis/build/ament_ws/src && \
-    mkdir -p /home/travis/build/ros2_java_ws/src
+    mkdir -p /home/travis/build/ros2_java_ws/src && \
+    mkdir -p /home/travis/.gradle && \
+    touch /home/travis/.gradle/gradle.properties && \
+    echo "org.gradle.jvmargs=-Xmx3072M -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" | tee -a /home/travis/.gradle/gradle.properties
 
 # Run commans
 CMD echo "Welcome to Debian Stable GNU/linux for ROS2 Java"
