@@ -76,6 +76,7 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         python3-empy \
         python3-nose \
         python3-pip \
+        python3-pyparsing \
         python3-pytest \
         python3-pytest-cov \
         python3-setuptools \
