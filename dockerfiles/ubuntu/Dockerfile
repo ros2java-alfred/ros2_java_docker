@@ -36,6 +36,7 @@ RUN apt-get update && \
     apt-get install ${APT_FLAGS} \
         gnupg \
         git \
+        curl \
         wget \
         apt-utils \
         locales && \
