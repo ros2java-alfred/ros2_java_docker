@@ -55,7 +55,7 @@ ENV LANG="en_US.UTF-8"
 
 RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
     /usr/bin/wget -qO - http://packages.osrfoundation.org/gazebo.key | apt-key add - && \
-    echo "deb http://packages.ros.org/ros/ubuntu stretch main" > /etc/apt/sources.list.d/ros-latest.list && \
+    echo "deb http://packages.ros.org/ros/ubuntu buster main" > /etc/apt/sources.list.d/ros-latest.list && \
     echo "deb http://packages.osrfoundation.org/gazebo/debian-stable stretch main" > /etc/apt/sources.list.d/gazebo-latest.list && \
     apt-get update && \
     apt-get install ${APT_FLAGS} \
