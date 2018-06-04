@@ -71,6 +71,7 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         libopencv-dev \
         libpoco-dev \
         python-empy \
+        python3-catkin-pkg-modules \
         python3-dev \
         python3-empy \
         python3-nose \

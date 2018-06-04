@@ -73,6 +73,7 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         libpocofoundation9v5 \
         libpocofoundation9v5-dbg \
         python-empy \
+        python3-catkin-pkg-modules \
         python3-dev \
         python3-empy \
         python3-nose \
