@@ -55,8 +55,8 @@ ENV LANG="en_US.UTF-8"
 
 RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
     /usr/bin/wget -qO - http://packages.osrfoundation.org/gazebo.key | apt-key add - && \
-    echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list && \
-    echo "deb http://packages.osrfoundation.org/gazebo/ubuntu xenial main" > /etc/apt/sources.list.d/gazebo-latest.list && \
+    echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros-latest.list && \
+    echo "deb http://packages.osrfoundation.org/gazebo/ubuntu bionic main" > /etc/apt/sources.list.d/gazebo-latest.list && \
     apt-get update && \
     apt-get install ${APT_FLAGS} \
         gradle \
@@ -70,8 +70,7 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         cmake \
         libopencv-dev \
         libpoco-dev \
-        libpocofoundation9v5 \
-        libpocofoundation9v5-dbg \
+        libpocofoundation50 \
         python-empy \
         python3-catkin-pkg-modules \
         python3-dev \
