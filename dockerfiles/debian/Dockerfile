@@ -69,7 +69,6 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         cppcheck \
         cmake \
         libopencv-dev \
-        libpoco-dev \
         python-empy \
         python3-catkin-pkg-modules \
         python3-dev \
@@ -83,6 +82,9 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         python3-vcstool \
         libtinyxml-dev \
         libeigen3-dev \
+        libassimp-dev \
+        libpoco-dev \
+        python3-colcon-common-extensions \
         clang-format \
         pydocstyle \
         pyflakes \
@@ -92,14 +94,9 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         python3-pep8 \
         uncrustify \
         libasio-dev \
-        libboost-chrono-dev \
-        libboost-date-time-dev \
-        libboost-program-options-dev \
-        libboost-regex-dev \
-        libboost-system-dev \
-        libboost-thread-dev \
-        libboost-thread-dev \
         libtinyxml2-dev \
+        python3-argcomplete \
+        clang \
         libbz2-dev \
         libreadline-dev \
         libsqlite3-dev \
@@ -110,7 +107,7 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         openssl && \
     rm -rf /var/lib/apt/lists/*
 
-#    libopensplice64
+#apt-get install ${APT_FLAGS} libopensplice67
 
 # Create default Workspace.
 RUN mkdir -p /home/travis/build/ament_ws/src && \

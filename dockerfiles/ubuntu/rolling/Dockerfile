@@ -55,8 +55,8 @@ ENV LANG="en_US.UTF-8"
 
 RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
     /usr/bin/wget -qO - http://packages.osrfoundation.org/gazebo.key | apt-key add - && \
-    echo "deb http://packages.ros.org/ros/ubuntu zesty main" > /etc/apt/sources.list.d/ros-latest.list && \
-    echo "deb http://packages.osrfoundation.org/gazebo/ubuntu zesty main" > /etc/apt/sources.list.d/gazebo-latest.list && \
+    echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros-latest.list && \
+    echo "deb http://packages.osrfoundation.org/gazebo/ubuntu bionic main" > /etc/apt/sources.list.d/gazebo-latest.list && \
     apt-get update && \
     apt-get install ${APT_FLAGS} \
         gradle \
@@ -69,7 +69,6 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         cppcheck \
         cmake \
         libopencv-dev \
-        libpoco-dev \
         python-empy \
         python3-catkin-pkg-modules \
         python3-dev \
@@ -83,6 +82,9 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         python3-vcstool \
         libtinyxml-dev \
         libeigen3-dev \
+        libassimp-dev \
+        libpoco-dev \
+        python3-colcon-common-extensions \
         clang-format \
         pydocstyle \
         pyflakes \
@@ -91,13 +93,9 @@ RUN /usr/bin/wget -qO - http://packages.ros.org/ros.key | apt-key add - && \
         python3-pep8 \
         uncrustify \
         libasio-dev \
-        libboost-chrono-dev \
-        libboost-date-time-dev \
-        libboost-program-options-dev \
-        libboost-regex-dev \
-        libboost-system-dev \
-        libboost-thread-dev \
         libtinyxml2-dev \
+        python3-argcomplete \
+        clang \
         libssl-dev \
         openssl && \
     rm -rf /var/lib/apt/lists/*
